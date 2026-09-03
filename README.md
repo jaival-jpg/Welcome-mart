@@ -37,8 +37,10 @@ labelled placeholder content.
 
 ## Editing content
 
-Everything a client or developer is likely to change lives in one object, `WM_DATA`, near the
-bottom of `index.html`:
+Everything a client or developer is likely to change sits in one clearly-labelled config block
+under `WELCOME MART — SITE RUNTIME`, near the bottom of `index.html`. Seven sections —
+`business`, `maps`, `images`, `nav`, `categories`, `products`, `gallery` — are assembled into a
+single `WM_DATA` object (also available as `window.WM_DATA` in the browser console):
 
 ```js
 var business = {

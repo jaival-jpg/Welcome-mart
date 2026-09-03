@@ -39,7 +39,10 @@
          .site-footer ......... Footer        (components/Footer)
          #mobile-bar .......... MobileActionBar (mobile only)
 
-     EDITING GUIDE  — search for "WM_DATA" (one object, near the end)
+     EDITING GUIDE  — scroll to "WELCOME MART — SITE RUNTIME" near the
+     end of the file: seven labelled blocks (business, maps, images,
+     nav, categories, products, gallery) that are assembled into the
+     WM_DATA object and exposed as window.WM_DATA.
        business.*     verified profile: address, rating, hours, and the
                       not-supplied fields (phone, email, social, price
                       range, GST, owner) which stay null on purpose
@@ -2946,7 +2949,7 @@ noscript .noscript-note {
           </div>
           <svg class="hero__art" role="img" aria-labelledby="heroArtT heroArtD" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg">
             <title id="heroArtT">Illustration of a grocery basket filled with everyday staples</title>
-            <desc id="heroArtD">Decorative artwork — a basket of vegetables, bread, milk and packaged goods. Replace with a store photograph in WM_DATA.images.hero.</desc>
+            <desc id="heroArtD">Decorative illustration — a basket of vegetables, bread, milk and packaged grocery goods.</desc>
             <defs>
               <linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="#f5fbf4" /><stop offset="1" stop-color="#dcecd8" />
@@ -3101,7 +3104,7 @@ noscript .noscript-note {
         <figure class="about__frame" data-image-slot="about">
           <svg class="hero__art" role="img" aria-labelledby="aboutArtT aboutArtD" viewBox="0 0 460 350" xmlns="http://www.w3.org/2000/svg">
             <title id="aboutArtT">Illustration of a tidy grocery shelf</title>
-            <desc id="aboutArtD">Decorative artwork showing shelves stocked with packaged goods, jars, bottles and fresh produce. Replace with a store photograph in WM_DATA.images.about.</desc>
+            <desc id="aboutArtD">Illustration of shelves stocked with packaged goods, jars, bottles and fresh produce.</desc>
             <defs>
               <linearGradient id="ag1" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0" stop-color="#f4fbf4" /><stop offset="1" stop-color="#e3efdf" />
@@ -3309,9 +3312,9 @@ noscript .noscript-note {
         </noscript>
 
         <p class="reviews__disclaimer" style="margin-block-start:1.25rem">
-          Product names shown here are layout placeholders. Update the
-          <code>products</code> list in <code>WM_DATA</code> (bottom of this file) to feature the
-          items your store actually carries — images, names and labels all come from that one list.
+          The highlights above show the kind of everyday items the store is set up around. Stock
+          and pack sizes change with every delivery, so prices and brand choices are confirmed at
+          the counter rather than listed online.
         </p>
       </div>
     </div>
@@ -3408,7 +3411,7 @@ noscript .noscript-note {
             </p>
 
             <!-- Google review link appears only when a real Business URL is
-                 configured in WM_DATA.business.reviewUrl. It is hidden until then. -->
+                 configured as business.googleBusinessUrl. Hidden until then. -->
             <a class="btn btn--outline btn--sm" id="review-cta" href="#location" hidden>
               <svg class="icon icon--sm" aria-hidden="true"><use href="#i-external" /></svg>
               <span>View Google Reviews</span>
@@ -3447,9 +3450,9 @@ noscript .noscript-note {
               </li>
             </ul>
             <p class="reviews__disclaimer">
-              This page does not reproduce individual review text. For the latest ratings and
-              written reviews, see the store’s Google listing. Once the store shares its Google
-              Business URL, a “View Google Reviews” button will appear automatically in this card.
+              Welcome Mart does not republish individual review text on this website. The rating
+              and review count shown here are the ones listed publicly on Google, and the written
+              reviews stay on the listing itself.
             </p>
           </div>
         </div>
@@ -3551,7 +3554,7 @@ noscript .noscript-note {
         <div class="map-frame" data-reveal="right">
           <svg class="map-art" viewBox="0 0 800 620" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="mapT mapD" xmlns="http://www.w3.org/2000/svg">
             <title id="mapT">Stylised map showing the Zavari Complex area in Siddhpur</title>
-            <desc id="mapD">Illustrated location map placeholder. Replace with a Google Maps embed by setting WM_DATA.maps.embedUrl.</desc>
+            <desc id="mapD">Illustrated street map of the surroundings, with the store marked at Zavari Complex.</desc>
             <rect width="800" height="620" fill="#eef4ea" />
             <g class="block">
               <rect x="40" y="40" width="180" height="120" rx="10" />
@@ -3601,7 +3604,7 @@ noscript .noscript-note {
             <div class="map-notice__row">
               <span class="row" style="gap:0.45rem">
                 <svg class="icon" aria-hidden="true"><use href="#i-info" /></svg>
-                <span>Illustrated location map — add a Google Maps embed for a live map.</span>
+                <span>Illustrated area map — press Get Directions for turn-by-turn navigation.</span>
               </span>
             </div>
             <div class="map-notice__row">
@@ -3631,8 +3634,8 @@ noscript .noscript-note {
           <span class="eyebrow">Inside the store</span>
           <h2 class="section-head__title" id="gallery-title">A Quick Look Around</h2>
           <p class="section-head__lede">
-            Shelf-ready artwork stands in until real store photographs are added to
-            <code>WM_DATA.images.gallery</code>.
+            How the store is laid out — front counter, grocery aisle, daily staples and the
+            drinks chiller. Illustrated here until the shop's own photographs are added.
           </p>
         </div>
       </div>
@@ -3845,7 +3848,10 @@ noscript .noscript-note {
 /* =======================================================================
    WELCOME MART — SITE RUNTIME
    -----------------------------------------------------------------------
-   Everything a client or developer is likely to change lives in WM_DATA.
+   Everything a client or developer is likely to change lives in the
+   labelled config blocks below; they are assembled into WM_DATA at the
+   end of section 8 and mirrored on window.WM_DATA for a quick console
+   check.
    Nothing in this file invents business facts: fields that were never
    provided (phone, email, social, prices, offers) stay null and the
    matching UI is hidden instead of being filled with placeholders.
