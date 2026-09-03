@@ -201,7 +201,6 @@
   --wm-red-100: #fbdce1;
   --wm-red-050: #fef2f4;
 
-  /* --- illustration extras (flat-art only) ---------------------------- */
   /* --- neutrals: white background, navy-tinted charcoal text ---------- */
   --wm-ink-900: #0c1330;
   --wm-ink-800: #1e2747;
@@ -321,7 +320,7 @@ html {
 }
 
 body {
-  background-color: var(--wm-bg);
+  background-color: var(--color-page);
   background-image:
     radial-gradient(120% 70% at 94% -10%, rgba(228, 0, 43, 0.05) 0%, rgba(228, 0, 43, 0) 55%),
     radial-gradient(78% 50% at 0% -4%, rgba(44, 69, 191, 0.06) 0%, rgba(44, 69, 191, 0) 58%);
@@ -633,7 +632,7 @@ hr {
   color: #fff;
   transform: translateY(-1px);
 }
-.btn--primary:active { transform: translateY(0); background: var(--wm-blue-900); color: #fff; }
+.btn--primary:active { transform: translateY(0); background: var(--color-primary-active); color: #fff; }
 
 .btn--accent {
   background: linear-gradient(168deg, var(--wm-red-400), var(--wm-red-500));
@@ -704,7 +703,7 @@ hr {
 /* Chip / pill toggle ------------------------------------------------------ */
 .chip {
   align-items: center;
-  background: var(--wm-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--r-pill);
   color: var(--wm-ink-700);
@@ -910,7 +909,7 @@ html.is-menu-open body { overflow: hidden; }
 /* Hamburger --------------------------------------------------------------- */
 .menu-toggle {
   align-items: center;
-  background: var(--wm-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--r-md);
   box-shadow: var(--sh-1);
@@ -1375,7 +1374,7 @@ html.is-menu-open body { overflow: hidden; }
 }
 .trust-card {
   align-items: center;
-  background: var(--wm-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--r-lg);
   box-shadow: var(--sh-1);
@@ -1591,7 +1590,7 @@ html.is-menu-open body { overflow: hidden; }
   list-style: none;
 }
 .cat-card {
-  background: var(--wm-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--r-lg);
   box-shadow: var(--sh-1);
@@ -1706,7 +1705,7 @@ html.is-menu-open body { overflow: hidden; }
   list-style: none;
 }
 .prod-card {
-  background: var(--wm-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--r-lg);
   box-shadow: var(--sh-1);
@@ -1893,7 +1892,7 @@ html.is-menu-open body { overflow: hidden; }
    14. REVIEWS / SOCIAL PROOF
    ========================================================================== */
 .reviews__panel {
-  background: var(--wm-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--r-xl);
   box-shadow: var(--sh-3);
@@ -1970,7 +1969,7 @@ html.is-menu-open body { overflow: hidden; }
   align-items: stretch;
 }
 .addr-card {
-  background: var(--wm-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--r-xl);
   box-shadow: var(--sh-2);
@@ -2018,7 +2017,7 @@ html.is-menu-open body { overflow: hidden; }
 }
 .map-art { block-size: 100%; inline-size: 100%; inset: 0; position: absolute; z-index: 1; }
 .map-art .road { stroke: #dbdee8; }
-.map-art .road-main { stroke: #cacfe1; }
+.map-art .road-main { stroke: #cfd6e8; }
 .map-art .block { fill: #e6e8f2; }
 .map-art .water { fill: #dbdeea; }
 .map-pin {
@@ -2085,7 +2084,7 @@ html.is-menu-open body { overflow: hidden; }
    16. OPENING HOURS
    ========================================================================== */
 .hours-card {
-  background: var(--wm-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--r-xl);
   box-shadow: var(--sh-2);
@@ -2304,7 +2303,7 @@ html.is-lightbox-open body { overflow: hidden; }
 .lightbox__nav { display: flex; gap: 0.4rem; }
 .icon-btn {
   align-items: center;
-  background: var(--wm-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--r-pill);
   color: var(--wm-ink-800);
@@ -2330,7 +2329,7 @@ html.is-lightbox-open body { overflow: hidden; }
    ========================================================================== */
 .faq { display: grid; gap: 0.65rem; }
 .faq__item {
-  background: var(--wm-surface);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--r-lg);
   overflow: hidden;
@@ -3328,52 +3327,52 @@ noscript .noscript-note {
               </linearGradient>
             </defs>
             <rect width="460" height="350" fill="url(#ag1)" />
-            <g fill="#ffffff" stroke="#cacfe1" stroke-width="3">
+            <g fill="#ffffff" stroke="#cfd6e8" stroke-width="3">
               <rect x="34" y="52" width="392" height="72" rx="8" />
               <rect x="34" y="140" width="392" height="72" rx="8" />
               <rect x="34" y="228" width="392" height="72" rx="8" />
             </g>
-            <g stroke="#0e183e" stroke-width="3" opacity="0.12">
+            <g stroke="#0d1440" stroke-width="3" opacity="0.12">
               <path d="M34 124h392M34 212h392M34 300h392" />
             </g>
             <!-- top shelf: jars + boxes -->
             <g>
-              <rect x="52" y="66" width="34" height="46" rx="6" fill="#203687" />
+              <rect x="52" y="66" width="34" height="46" rx="6" fill="#1b2a7a" />
               <rect x="58" y="76" width="22" height="10" rx="4" fill="#ffffff" opacity="0.85" />
-              <rect x="96" y="70" width="30" height="42" rx="6" fill="#ef0b35" />
-              <rect x="136" y="60" width="40" height="52" rx="6" fill="#ffffff" stroke="#cacfe1" stroke-width="3" />
-              <path d="M144 76h24M144 88h16" stroke="#8d9eda" stroke-width="4" stroke-linecap="round" />
-              <circle cx="206" cy="88" r="20" fill="#eb2741" />
-              <path d="M206 68c5-6 12-7 16-5-6 2-10 5-11 10z" fill="#3951a9" />
-              <rect x="246" y="64" width="34" height="48" rx="8" fill="#0e183e" opacity="0.78" />
+              <rect x="96" y="70" width="30" height="42" rx="6" fill="#e4002b" />
+              <rect x="136" y="60" width="40" height="52" rx="6" fill="#ffffff" stroke="#cfd6e8" stroke-width="3" />
+              <path d="M144 76h24M144 88h16" stroke="#6e87e6" stroke-width="4" stroke-linecap="round" />
+              <circle cx="206" cy="88" r="20" fill="#e4002b" />
+              <path d="M206 68c5-6 12-7 16-5-6 2-10 5-11 10z" fill="#2c45bf" />
+              <rect x="246" y="64" width="34" height="48" rx="8" fill="#0d1440" opacity="0.78" />
               <rect x="292" y="74" width="26" height="38" rx="6" fill="#c2cbeb" />
-              <rect x="330" y="62" width="34" height="50" rx="8" fill="#ffffff" stroke="#cacfe1" stroke-width="3" />
-              <rect x="376" y="80" width="30" height="32" rx="6" fill="#ff5877" />
+              <rect x="330" y="62" width="34" height="50" rx="8" fill="#ffffff" stroke="#cfd6e8" stroke-width="3" />
+              <rect x="376" y="80" width="30" height="32" rx="6" fill="#f87c90" />
             </g>
             <!-- middle shelf: bottles + packets -->
             <g>
-              <path d="M60 154h26v16l8 26v8H52v-8l8-26z" fill="#2c46a3" />
-              <rect x="102" y="156" width="44" height="44" rx="6" fill="#ffffff" stroke="#cacfe1" stroke-width="3" />
-              <path d="M110 170h28" stroke="#ef0b35" stroke-width="6" stroke-linecap="round" />
-              <path d="M110 184h18" stroke="#cacfe1" stroke-width="5" stroke-linecap="round" />
-              <rect x="160" y="150" width="30" height="50" rx="10" fill="#e8eaf2" stroke="#cacfe1" stroke-width="3" />
-              <rect x="200" y="150" width="30" height="50" rx="10" fill="#e8eaf2" stroke="#cacfe1" stroke-width="3" />
-              <rect x="244" y="162" width="52" height="38" rx="6" fill="#fd1f47" />
-              <rect x="308" y="156" width="34" height="44" rx="8" fill="#122155" />
-              <circle cx="368" cy="180" r="19" fill="#eb2741" opacity="0.9" />
-              <path d="M398 162h22v38h-22z" fill="#8d9eda" />
+              <path d="M60 154h26v16l8 26v8H52v-8l8-26z" fill="#2c45bf" />
+              <rect x="102" y="156" width="44" height="44" rx="6" fill="#ffffff" stroke="#cfd6e8" stroke-width="3" />
+              <path d="M110 170h28" stroke="#e4002b" stroke-width="6" stroke-linecap="round" />
+              <path d="M110 184h18" stroke="#cfd6e8" stroke-width="5" stroke-linecap="round" />
+              <rect x="160" y="150" width="30" height="50" rx="10" fill="#e8eaf2" stroke="#cfd6e8" stroke-width="3" />
+              <rect x="200" y="150" width="30" height="50" rx="10" fill="#e8eaf2" stroke="#cfd6e8" stroke-width="3" />
+              <rect x="244" y="162" width="52" height="38" rx="6" fill="#f0334f" />
+              <rect x="308" y="156" width="34" height="44" rx="8" fill="#0d1440" />
+              <circle cx="368" cy="180" r="19" fill="#e4002b" opacity="0.9" />
+              <path d="M398 162h22v38h-22z" fill="#6e87e6" />
             </g>
             <!-- bottom shelf: basket + produce -->
             <g>
-              <path d="M52 250h120l-12 40a8 8 0 0 1-8 6H72a8 8 0 0 1-8-6z" fill="#122155" opacity="0.9" />
-              <path d="M46 244h132" stroke="#0e183e" stroke-width="7" stroke-linecap="round" />
-              <circle cx="86" cy="236" r="14" fill="#3951a9" />
-              <circle cx="116" cy="232" r="12" fill="#eb2741" />
-              <circle cx="146" cy="238" r="13" fill="#ef0b35" />
-              <rect x="196" y="248" width="46" height="44" rx="6" fill="#ffffff" stroke="#cacfe1" stroke-width="3" />
-              <rect x="252" y="248" width="46" height="44" rx="6" fill="#dce1f4" />
-              <rect x="308" y="256" width="40" height="36" rx="6" fill="#ff5877" />
-              <path d="M362 292v-30a12 12 0 0 1 24 0v30z" fill="#203687" />
+              <path d="M52 250h120l-12 40a8 8 0 0 1-8 6H72a8 8 0 0 1-8-6z" fill="#0d1440" opacity="0.9" />
+              <path d="M46 244h132" stroke="#0d1440" stroke-width="7" stroke-linecap="round" />
+              <circle cx="86" cy="236" r="14" fill="#2c45bf" />
+              <circle cx="116" cy="232" r="12" fill="#e4002b" />
+              <circle cx="146" cy="238" r="13" fill="#e4002b" />
+              <rect x="196" y="248" width="46" height="44" rx="6" fill="#ffffff" stroke="#cfd6e8" stroke-width="3" />
+              <rect x="252" y="248" width="46" height="44" rx="6" fill="#dbe6fb" />
+              <rect x="308" y="256" width="40" height="36" rx="6" fill="#f87c90" />
+              <path d="M362 292v-30a12 12 0 0 1 24 0v30z" fill="#1b2a7a" />
             </g>
           </svg>
         </figure>
@@ -3798,7 +3797,7 @@ noscript .noscript-note {
             <g class="road-main" fill="none" stroke-width="26" stroke-linecap="round">
               <path d="M0 350h800" />
             </g>
-            <g stroke="#ef0b35" stroke-width="3" stroke-dasharray="14 12" opacity="0.85">
+            <g stroke="#e4002b" stroke-width="3" stroke-dasharray="14 12" opacity="0.85">
               <path d="M0 350h800" fill="none" />
             </g>
             <g fill="#9ca2b9" font-family="Inter, sans-serif" font-size="17" font-weight="600">
@@ -3807,7 +3806,7 @@ noscript .noscript-note {
               <text x="60" y="480">Siddhpur · 384151</text>
             </g>
             <g>
-              <rect x="440" y="286" width="150" height="46" rx="10" fill="#122155" />
+              <rect x="440" y="286" width="150" height="46" rx="10" fill="#0d1440" />
               <text x="466" y="316" fill="#f2f4fb" font-family="Poppins, Inter, sans-serif" font-size="19" font-weight="600">Welcome Mart</text>
             </g>
           </svg>
