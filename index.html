@@ -1311,6 +1311,56 @@ html.is-menu-open body { overflow: hidden; }
   z-index: 1;
 }
 
+/* --- client hero photograph ------------------------------------------------
+   A layer of its own on the card, painted above the artwork and the sheen so
+   no effect sits in front of the picture. It is never distorted: a wide shot
+   is cropped edge-to-edge, a tall or square one (a phone screenshot, for
+   instance) is shown whole and the frame's own gradient becomes the plate. */
+.hero__photo {
+  block-size: 100%;
+  border-radius: var(--r-2xl);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.42);
+  inline-size: 100%;
+  inset: 0;
+  object-fit: cover;
+  object-position: 50% 50%;
+  position: absolute;
+  transform: translateZ(2px);
+  transition: object-position 620ms var(--ease-out), filter 620ms var(--ease-out),
+              opacity 520ms var(--ease-out);
+  z-index: 4;
+}
+.js .hero__photo:not(.is-loaded) { opacity: 0; }
+.js .hero__photo.is-loaded { opacity: 1; }
+.hero__photo.is-portrait { object-fit: contain; }
+.hero__photo.is-missing { display: none; }
+
+/* --- hover: the card answers, the stack opens up, the shot settles -------- */
+.hero__stage:hover .hero__card {
+  transform: rotateX(calc(var(--rx) * 0.45)) rotateY(calc(var(--ry) * 0.45))
+             translateZ(1.4rem) scale(1.014);
+}
+.hero__stage:hover .hero__photo {
+  filter: saturate(1.06) brightness(1.03);
+  object-position: 50% 44%;
+}
+.hero__stage:hover .hero__slab--blue { transform: translate3d(-2rem, 1.75rem, -5.6rem) rotateZ(-1.6deg); }
+.hero__stage:hover .hero__slab--red { transform: translate3d(1.55rem, 2.9rem, -9.6rem) rotateZ(2deg); }
+.hero__stage:hover .hero__slab--sky { transform: translate3d(-3.4rem, 3.5rem, -13.5rem) rotateZ(-3deg); }
+.hero__stage:hover .hero__chips { transform: translateZ(6.6rem); }
+.hero__stage:hover .hero__floor { block-size: 4.2rem; filter: blur(10px); inset-inline: 4%; opacity: 0.82; }
+/* freeze the idle float while the visitor is looking closely at the picture */
+.js .hero__stage:hover .hero__lift { animation-play-state: paused; }
+.hero__slab, .hero__chips, .hero__floor { transition: transform 560ms var(--ease-out), box-shadow 560ms var(--ease-out), filter 560ms var(--ease-out), block-size 560ms var(--ease-out), opacity 560ms var(--ease-out); }
+@media (prefers-reduced-motion: reduce) {
+  .hero__stage:hover .hero__card { transform: rotateX(var(--rx)) rotateY(var(--ry)); }
+  .hero__stage:hover .hero__photo { filter: none; object-position: 50% 50%; }
+  .hero__stage:hover .hero__slab--blue,
+  .hero__stage:hover .hero__slab--red,
+  .hero__stage:hover .hero__slab--sky,
+  .hero__stage:hover .hero__chips { transform: none; }
+  .js .hero__stage:hover .hero__lift { animation-play-state: running; }
+}
 /* floating chips ride above the card plane on their own Z */
 .hero__chips {
   display: flex;
@@ -3295,6 +3345,18 @@ noscript .noscript-note {
               </figure>
 
               <span class="hero__glare" aria-hidden="true"></span>
+
+              <!-- ===================================================================
+                   HERO PHOTOGRAPH — supplied by the business.
+                   Added as the front face of the 3-D card: the sheen and the
+                   generated artwork sit behind it, so nothing is painted over the
+                   picture except the corner chip. Change the src to swap the shot
+                   (or set images.hero in WM_DATA and delete this <img>).
+                   Please rewrite alt="" style descriptions for the real subject:
+                   it currently names the store rather than describing the frame.
+                   =================================================================== -->
+              <img class="hero__photo" src="https://i.ibb.co/Qjj85ZsZ/Screenshot-20260820-222726.jpg" alt="Welcome Mart"
+                   loading="eager" decoding="async" fetchpriority="high" />
             </div>
           </div>
 
@@ -5476,6 +5538,32 @@ noscript .noscript-note {
   }
 
   /* =====================================================================
+     20d. HERO PHOTOGRAPH
+     Two small jobs for the supplied shot, and nothing else: a tall or square
+     source is shown whole instead of cropped, and a failed or stalled request
+     steps aside so the generated basket artwork is still there underneath.
+     ===================================================================== */
+  var HERO_PHOTO_TIMEOUT = 3000;   /* ms before a stalled request gives up */
+
+  function initHeroPhoto() {
+    var photo = qs('.hero__photo');
+    if (!photo) return;
+    var timer = 0;
+    function clear() { if (timer) { window.clearTimeout(timer); timer = 0; } }
+    function aside() { clear(); photo.classList.add('is-missing'); }
+    function landed() {
+      clear();
+      var ratio = photo.naturalWidth / photo.naturalHeight;
+      if (ratio && ratio < 1.15) photo.classList.add('is-portrait');
+      photo.classList.add('is-loaded');
+    }
+    photo.addEventListener('load', function () { if (photo.naturalWidth > 0) landed(); else aside(); });
+    photo.addEventListener('error', aside);
+    if (photo.complete) { if (photo.naturalWidth > 0) landed(); else aside(); }
+    else { timer = window.setTimeout(aside, HERO_PHOTO_TIMEOUT); }
+  }
+
+  /* =====================================================================
      21. BOOT
      ===================================================================== */
   function boot() {
@@ -5490,6 +5578,7 @@ noscript .noscript-note {
     initFaq();
     initHeroStage();
     initBrandLogo();
+    initHeroPhoto();
     updateOpenStatus();
     onScrollFrame();
     revealAll();

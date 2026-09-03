@@ -60,6 +60,29 @@ var business = {
 };
 ```
 
+### The hero photograph
+
+The store's own picture is the front face of the 3-D hero card — one `<img>` added inside
+`.hero__card`, above the generated artwork and the sheen, so nothing is painted over it
+except the small corner chip:
+
+```html
+<img class="hero__photo" src="https://i.ibb.co/Qjj85ZsZ/Screenshot-20260820-222726.jpg" alt="Welcome Mart" />
+```
+
+To change the shot, edit that one `src` (or set `images.hero` in the config and delete the
+`<img>` — both paths render the same way). Behaviour worth knowing:
+
+- a **wide** image is cropped edge-to-edge (`object-fit: cover`); a **tall or square** source —
+  a phone screenshot, for example — is shown whole, with the card's own gradient as the
+  letterbox plate, because JS measures it and adds `.is-portrait`
+- `alt` currently names the store; rewrite it to describe what the photo actually shows
+- if the file ever fails to load (or stalls past 3 s), `.is-missing` hides it and the inline
+  basket artwork underneath shows again — the hero is never left half-empty
+- hover is the only extra motion: the card straightens and rises, the coloured slabs spread,
+  the chips lift, the pan shifts a few percent, and the idle float pauses. Everything is
+  disabled under `prefers-reduced-motion`, and the image itself has no overlay effects.
+
 ### The logo and the favicon
 
 The business logo is used in three places — the header brand link, the footer brand lockup
