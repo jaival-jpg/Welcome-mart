@@ -47,6 +47,9 @@
                       not-supplied fields (phone, email, social, price
                       range, GST, owner) which stay null on purpose
        maps.*         directions URL · optional embed URL for a live map
+       logo / favicon deliberately NOT in WM_DATA — they are plain markup
+                      ("BRAND LOGO + FAVICON" in <head>) so they appear even
+                      with JavaScript disabled and cost no extra script
        images.*       hero / about / store / categories / products /
                       gallery — set a path and the SVG artwork is
                       replaced by your photograph automatically
@@ -81,7 +84,9 @@
 <meta name="format-detection" content="telephone=no" />
 
 <!-- Open Graph (og:image intentionally omitted until a hosted
-     image URL for the business is available) -->
+     image URL for the business is available, so the supplied logo stands in) -->
+<meta property="og:image" content="https://i.ibb.co/dsr6wZCh/a-And-also-1-1-in-this.png" />
+<meta property="og:image:alt" content="Welcome Mart logo" />
 <meta property="og:type" content="business.business" />
 <meta property="og:site_name" content="Welcome Mart" />
 <meta property="og:title" content="Welcome Mart | Grocery Store in Siddhpur, Gujarat" />
@@ -92,10 +97,24 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Welcome Mart | Grocery Store in Siddhpur, Gujarat" />
 <meta name="twitter:description" content="Local grocery store in Siddhpur, Gujarat. Everyday essentials, open daily 9:00 AM – 8:00 PM." />
+<meta name="twitter:image" content="https://i.ibb.co/dsr6wZCh/a-And-also-1-1-in-this.png" />
+<meta name="twitter:image:alt" content="Welcome Mart logo" />
 
-<!-- Favicon: inline SVG, no external file needed -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231b2a7a'/%3E%3Cpath d='M44 22l10 10-10 10z' fill='%23e4002b'/%3E%3Cpath d='M14 25h30l-2.8 21.4a4 4 0 0 1-4 3.6H20.8a4 4 0 0 1-4-3.6z' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M23 25l7-11 7 11' fill='none' stroke='%23e4002b' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
-<link rel="apple-touch-icon-precomposed" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231b2a7a'/%3E%3Cpath d='M44 22l10 10-10 10z' fill='%23e4002b'/%3E%3Cpath d='M14 25h30l-2.8 21.4a4 4 0 0 1-4 3.6H20.8a4 4 0 0 1-4-3.6z' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<!-- =====================================================================
+     BRAND LOGO + FAVICON
+       The logo supplied by the business is referenced from its hosted URL so
+       this stays a single file with no build step. To self-host it — the
+       recommended production move, one less third-party dependency — save the
+       file next to index.html as assets/logo.png and replace the URL in these
+       links plus the two <img class="brand__logo"> tags (search the file for
+       "i.ibb.co"). The inline SVG tile below remains as the fallback favicon,
+       and the header/footer basket mark is restored automatically if the logo
+       ever fails to load (and also while JavaScript is unavailable), so the
+       brand lockup is never left empty.
+     ===================================================================== -->
+<link rel="icon" type="image/png" href="https://i.ibb.co/dsr6wZCh/a-And-also-1-1-in-this.png" />
+<link rel="apple-touch-icon-precomposed" href="https://i.ibb.co/dsr6wZCh/a-And-also-1-1-in-this.png" />
+<link rel="alternate icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231b2a7a'/%3E%3Cpath d='M44 22l10 10-10 10z' fill='%23e4002b'/%3E%3Cpath d='M14 25h30l-2.8 21.4a4 4 0 0 1-4 3.6H20.8a4 4 0 0 1-4-3.6z' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M23 25l7-11 7 11' fill='none' stroke='%23e4002b' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
 
 <!-- Fonts: Poppins (display) + Inter (text) with system fallbacks -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -239,25 +258,20 @@
   --font-body: "Inter", "Segoe UI", "Noto Sans", system-ui, -apple-system, sans-serif;
   --fs-hero: clamp(1.95rem, 1.28rem + 3.05vw, 3.9rem);
   --fs-h2: clamp(1.6rem, 1.17rem + 1.95vw, 2.6rem);
-  --fs-h3: clamp(1.18rem, 1.05rem + 0.55vw, 1.5rem);
-  --fs-h4: clamp(1.03rem, 0.98rem + 0.22vw, 1.16rem);
+  --fs-h3: clamp(1.03rem, 0.98rem + 0.22vw, 1.16rem);   /* card + panel titles (h3) */
   --fs-lede: clamp(1.02rem, 0.96rem + 0.3vw, 1.2rem);
   --fs-body: clamp(0.955rem, 0.93rem + 0.11vw, 1.04rem);
   --fs-small: clamp(0.85rem, 0.83rem + 0.09vw, 0.92rem);
   --fs-tiny: 0.78rem;
-  --lh-tight: 1.1;
   --lh-snug: 1.3;
   --lh-body: 1.65;
 
-  /* --- spacing / rhythm --------------------------------------------- */
+  /* --- spacing / rhythm (every step is consumed by the rules above) --- */
   --gap-1: 0.25rem;
   --gap-2: 0.5rem;
   --gap-3: 0.75rem;
   --gap-4: 1rem;
   --gap-5: 1.5rem;
-  --gap-6: 2rem;
-  --gap-7: 2.75rem;
-  --gap-8: 3.5rem;
   --section-y: clamp(3.5rem, 2.1rem + 6vw, 7.25rem);
   --shell-max: 75rem;
   --shell-wide: 82.5rem;
@@ -492,7 +506,7 @@ hr {
   font-family: var(--font-body);
   font-size: var(--fs-tiny);
   font-weight: 650;
-  gap: 0.5rem;
+  gap: var(--gap-2);
   letter-spacing: 0.15em;
   line-height: 1.2;
   text-transform: uppercase;
@@ -515,7 +529,7 @@ hr {
   display: inline-flex;
   font-size: var(--fs-tiny);
   font-weight: 600;
-  gap: 0.5rem;
+  gap: var(--gap-2);
   letter-spacing: 0.1em;
   padding: 0.42rem 0.9rem 0.42rem 0.72rem;
   text-transform: uppercase;
@@ -741,7 +755,7 @@ hr {
 
 .chip-scroll {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--gap-2);
   inline-size: 100%;
   overflow-x: auto;
   padding-block: 0.2rem 0.45rem;
@@ -845,6 +859,42 @@ html.is-menu-open body { overflow: hidden; }
   justify-content: center;
 }
 .brand__mark .icon { block-size: 1.42rem; inline-size: 1.42rem; stroke-width: 1.85; }
+
+/* The supplied logo replaces the generated tile mark once it is present.
+   It is height-locked and object-fit: contain, so any aspect ratio of the
+   client's file lands on the same baseline without distortion. */
+.brand__logo {
+  block-size: 2.5rem;
+  display: block;
+  inline-size: auto;
+  max-inline-size: 8.5rem;
+  object-fit: contain;
+  transition: block-size var(--dur) var(--ease-out);
+}
+.brand__mark { display: none; }
+/* two ways the generated tile comes back: the logo failed, or the visitor has
+   no JavaScript and we cannot know which one it is yet */
+.no-js .brand__mark,
+.is-logo-failed .brand__mark { display: inline-flex; }
+.is-logo-failed .brand__logo { display: none; }
+@media (min-width: 48em) {
+  .site-header.is-stuck .brand__logo { block-size: 2.2rem; }
+}
+/* guard the nav row: a wide horizontal lockup can never push the menu out */
+@media (min-width: 64em) {
+  .site-header .brand__logo { block-size: 2.4rem; max-inline-size: 7.5rem; }
+}
+/* dark footer: logos are usually drawn for light backgrounds, so the mark
+   sits on a small white plate instead of being recoloured */
+.footer__logo .brand__logo {
+  background: #fff;
+  border-radius: 13px;
+  block-size: 2.5rem;
+  inline-size: 2.5rem;
+  max-inline-size: 8.5rem;
+  object-fit: contain;
+  padding: 0.3rem;
+}
 .brand__text { display: grid; gap: 0.05rem; line-height: 1; }
 .brand__name {
   color: var(--wm-blue-900);
@@ -867,7 +917,7 @@ html.is-menu-open body { overflow: hidden; }
 @media (max-width: 23.4375em) {
   .brand__tag { display: none; }
   .brand__name { font-size: 0.94rem; letter-spacing: 0.05em; }
-  .brand { gap: 0.5rem; }
+  .brand { gap: var(--gap-2); }
 }
 
 /* Desktop nav ------------------------------------------------------------- */
@@ -1265,7 +1315,7 @@ html.is-menu-open body { overflow: hidden; }
 .hero__chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--gap-2);
   inset-inline: 0;
   inset-block-end: -1.55rem;
   justify-content: center;
@@ -1284,7 +1334,7 @@ html.is-menu-open body { overflow: hidden; }
   display: inline-flex;
   font-size: 0.78rem;
   font-weight: 600;
-  gap: 0.5rem;
+  gap: var(--gap-2);
   padding: 0.42rem 0.85rem;
   pointer-events: auto;
   white-space: nowrap;
@@ -1470,7 +1520,7 @@ html.is-menu-open body { overflow: hidden; }
   align-items: center;
   display: inline-flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--gap-2);
 }
 .rating-inline__score {
   color: var(--wm-ink-900);
@@ -1643,7 +1693,7 @@ html.is-menu-open body { overflow: hidden; }
   letter-spacing: 0.1em;
 }
 .cat-card__title {
-  font-size: var(--fs-h4);
+  font-size: var(--fs-h3);
   margin-block-start: 1rem;
   position: relative;
 }
@@ -1754,7 +1804,7 @@ html.is-menu-open body { overflow: hidden; }
   text-transform: uppercase;
 }
 .prod-card__flag .icon { block-size: 0.8rem; inline-size: 0.8rem; stroke-width: 2.4; }
-.prod-card__body { display: grid; gap: 0.25rem; padding: 0.95rem 1rem 1.05rem; }
+.prod-card__body { display: grid; gap: var(--gap-1); padding: 0.95rem 1rem 1.05rem; }
 .prod-card__cat {
   align-items: center;
   color: var(--wm-blue-700);
@@ -1869,7 +1919,7 @@ html.is-menu-open body { overflow: hidden; }
 .why-card__icon .icon { block-size: 1.4rem; inline-size: 1.4rem; }
 .why-card__title {
   color: #fff;
-  font-size: var(--fs-h4);
+  font-size: var(--fs-h3);
   margin-block-start: 0.95rem;
 }
 .why-card__text { color: rgba(224, 227, 240, 0.74); font-size: 0.9rem; line-height: 1.6; margin-block-start: 0.35rem; }
@@ -1977,7 +2027,7 @@ html.is-menu-open body { overflow: hidden; }
   gap: 1.05rem;
   padding: clamp(1.2rem, 0.9rem + 1.4vw, 1.9rem);
 }
-.addr-card__title { align-items: center; display: flex; font-size: var(--fs-h4); gap: 0.6rem; }
+.addr-card__title { align-items: center; display: flex; font-size: var(--fs-h3); gap: 0.6rem; }
 .addr-card__title .icon { block-size: 1.25rem; color: var(--wm-blue-700); inline-size: 1.25rem; }
 .addr-line { color: var(--wm-ink-700); font-size: 1rem; line-height: 1.65; }
 .addr-line strong { display: block; }
@@ -2076,7 +2126,7 @@ html.is-menu-open body { overflow: hidden; }
   right: 0.8rem;
   z-index: 4;
 }
-.map-notice__row { align-items: center; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: space-between; }
+.map-notice__row { align-items: center; display: flex; flex-wrap: wrap; gap: var(--gap-2); justify-content: space-between; }
 .map-notice__row + .map-notice__row { margin-block-start: 0.35rem; }
 .map-notice .icon { block-size: 1rem; color: var(--wm-blue-600); inline-size: 1rem; }
 
@@ -2158,7 +2208,7 @@ html.is-menu-open body { overflow: hidden; }
   transition: background var(--dur-fast) var(--ease-out);
 }
 .hours-list li:last-child .hours-row { border-block-end: 0; }
-.hours-row__day { align-items: center; display: flex; font-weight: 550; gap: 0.5rem; }
+.hours-row__day { align-items: center; display: flex; font-weight: 550; gap: var(--gap-2); }
 .hours-row__time { font-variant-numeric: tabular-nums; }
 .hours-row__badge {
   background: var(--wm-blue-100);
@@ -2240,7 +2290,7 @@ html.is-menu-open body { overflow: hidden; }
   inset-inline: 0;
   inset-block-end: 0;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: var(--gap-2);
   padding: 1.4rem 0.75rem 0.6rem;
   position: absolute;
 }
@@ -2298,7 +2348,7 @@ html.is-lightbox-open body { overflow: hidden; }
 .lightbox.is-open .lightbox__dialog { transform: none; }
 .lightbox__stage { background: var(--wm-surface-2); display: grid; place-items: center; }
 .lightbox__stage svg, .lightbox__stage img { block-size: auto; inline-size: 100%; max-block-size: 62vh; object-fit: contain; }
-.lightbox__bar { align-items: center; display: flex; gap: 0.5rem; justify-content: space-between; padding: 0.85rem 1rem; border-block-start: 1px solid var(--color-border); }
+.lightbox__bar { align-items: center; display: flex; gap: var(--gap-2); justify-content: space-between; padding: 0.85rem 1rem; border-block-start: 1px solid var(--color-border); }
 .lightbox__title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; }
 .lightbox__nav { display: flex; gap: 0.4rem; }
 .icon-btn {
@@ -2390,7 +2440,7 @@ details.faq__item > .faq__panel { display: block; }
 /* No-JavaScript fallback lists for JS-rendered grids */
 .cat-grid-fallback {
   display: grid;
-  gap: 0.5rem;
+  gap: var(--gap-2);
   list-style: disc;
   margin-block: 1rem;
   padding-inline-start: 1.2rem;
@@ -2657,7 +2707,7 @@ details.faq__item > .faq__panel { display: block; }
 @media (min-width: 40em) {
   .addr-card__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cta__actions { margin-block-start: 1.9rem; }
-  .about__foot { justify-content: flex-start; gap: 1.5rem; }
+  .about__foot { justify-content: flex-start; gap: var(--gap-5); }
   .gallery__grid { grid-template-columns: repeat(3, 1fr); }
   .check-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -2763,9 +2813,9 @@ noscript .noscript-note {
   max-inline-size: var(--shell-max);
   padding: 0.7rem 1rem;
 }
-[data-fallback] { display: none; }
-.no-js [data-fallback] { display: block; }
-.no-js [data-js-only-content] { display: none; }
+/* The no-JS story is told by real <noscript> blocks (a note, plus plain link
+   lists for the categories and products), so no fallback attributes are
+   needed here; .no-js only has to retire the interactive rules. */
 
 /* Utility: monospaced numerals for hours + rating */
 .nums { font-variant-numeric: tabular-nums; }
@@ -2978,6 +3028,8 @@ noscript .noscript-note {
 
   <div class="shell header-bar">
     <a class="brand" href="#top" aria-label="Welcome Mart — back to top of page">
+      <img class="brand__logo" src="https://i.ibb.co/dsr6wZCh/a-And-also-1-1-in-this.png" alt="" width="48" height="48"
+           loading="eager" decoding="async" fetchpriority="high" />
       <span class="brand__mark" aria-hidden="true">
         <svg class="icon"><use href="#i-basket" /></svg>
       </span>
@@ -3976,6 +4028,7 @@ noscript .noscript-note {
   <div class="shell shell--wide footer__grid">
     <div class="footer__brand">
       <div class="footer__logo">
+        <img class="brand__logo" src="https://i.ibb.co/dsr6wZCh/a-And-also-1-1-in-this.png" alt="" width="48" height="48" loading="lazy" decoding="async" />
         <span class="brand__mark" aria-hidden="true"><svg class="icon"><use href="#i-basket" /></svg></span>
         <span class="brand__text">
           <span class="brand__name">Welcome Mart</span>
@@ -4164,6 +4217,10 @@ noscript .noscript-note {
         Set it to a path/URL to render a real photo automatically.
      ===================================================================== */
   var images = {
+    /* The brand logo + favicon are not here on purpose: they are plain markup
+       (<link rel="icon"> in <head> and <img class="brand__logo"> in the
+       header/footer) so they also work with JavaScript disabled. Search the
+       file for "i.ibb.co" to change them. */
     hero: '',              /* e.g. "images/store-front.jpg"  */
     about: '',             /* e.g. "images/aisle.jpg"        */
     store: '',             /* e.g. "images/counter.jpg"      */
@@ -5385,6 +5442,40 @@ noscript .noscript-note {
   }
 
   /* =====================================================================
+     20c. BRAND LOGO
+     The header/footer logo and the favicon come from the same hosted file.
+     A logo URL is the one piece of media that has to survive a broken CDN:
+     if the image fails (or reports zero intrinsic size), the generated basket
+     mark is put back so the lockup is never empty. No layout shift either way
+     — the logo and the tile occupy the same box.
+     ===================================================================== */
+  var LOGO_TIMEOUT = 2500;   /* ms before the generated mark stands in */
+
+  function initBrandLogo() {
+    qsa('.brand__logo').forEach(function (img) {
+      /* the slot is the image's own container: .brand in the header,
+         .footer__logo in the footer — both already lay out as flex rows */
+      var slot = img.parentElement;
+      if (!slot || !slot.querySelector('.brand__mark')) return;
+      var timer = 0;
+      function fail() {
+        if (timer) { window.clearTimeout(timer); timer = 0; }
+        slot.classList.add('is-logo-failed');
+      }
+      function fine() {
+        if (timer) { window.clearTimeout(timer); timer = 0; }
+        slot.classList.remove('is-logo-failed');
+      }
+      img.addEventListener('error', fail);
+      img.addEventListener('load', function () { if (img.naturalWidth > 0) fine(); else fail(); });
+      /* A stalled request never fires either event, so the tile mark is
+         restored on a timer and swapped out again if the logo lands late. */
+      if (img.complete) { if (img.naturalWidth > 0) fine(); else fail(); }
+      else if (!timer) { timer = window.setTimeout(fail, LOGO_TIMEOUT); }
+    });
+  }
+
+  /* =====================================================================
      21. BOOT
      ===================================================================== */
   function boot() {
@@ -5398,6 +5489,7 @@ noscript .noscript-note {
     initCopy();
     initFaq();
     initHeroStage();
+    initBrandLogo();
     updateOpenStatus();
     onScrollFrame();
     revealAll();

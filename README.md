@@ -13,7 +13,7 @@ Siddhpur, Gujarat.
 
 | Section | Anchor | Notes |
 | --- | --- | --- |
-| Sticky header + mobile drawer | — | Logo, 6 nav links, Get Directions, animated hamburger menu |
+| Sticky header + mobile drawer | — | Logo (fallback tile if it ever fails to load), 6 nav links, Get Directions, animated hamburger |
 | Hero | `#top` | Ribbon backdrop, headline with a folded red tag, two CTAs, Google rating proof, and a **3D showpiece card** that tilts toward the pointer |
 | Trust / quick-info strip | — | Google rating · review count · hours · location |
 | About | `#about` | Store intro, four value points, "Visit Welcome Mart" CTA |
@@ -59,6 +59,33 @@ var business = {
   phone: null, whatsapp: null, email: null, googleBusinessUrl: null, gstin: null
 };
 ```
+
+### The logo and the favicon
+
+The business logo is used in three places — the header brand link, the footer brand lockup
+and the browser tab / home-screen icon — all pointing at the same hosted file:
+
+```html
+<link rel="icon" type="image/png" href="https://i.ibb.co/dsr6wZCh/a-And-also-1-1-in-this.png" />
+<img class="brand__logo" src="https://i.ibb.co/dsr6wZCh/a-And-also-1-1-in-this.png" alt="" />
+```
+
+Search the file for `i.ibb.co` to change it (four occurrences: two links, two images). The
+logo is height-locked with `object-fit: contain`, so any aspect ratio lands on the same
+baseline without distortion, and it never breaks the layout: if the image fails to load — or
+the request stalls for more than 2.5 s — the generated basket tile is put back automatically.
+
+For production, self-hosting is the better move (one less third-party dependency):
+
+```text
+assets/logo.png     ← save the file here, then replace the URL in those four places
+```
+
+If the logo ever needs to sit on the dark footer differently, `.footer__logo .brand__logo`
+already gives it a white plate; adjust `padding`/`border-radius` there. Two other knobs are
+worth knowing: the desktop width of the mark is capped (`max-inline-size`) so a long
+horizontal lockup can never push the menu out, and if your logo already contains the words
+"Welcome Mart", hide the text beside it with `.brand__text { display: none; }`.
 
 ### Add real store photographs
 
@@ -132,4 +159,6 @@ the illustrations follow the same brand.
 - [ ] Optional Google Maps embed URL (replaces the styled map)
 - [ ] Confirm the hours and the review count are still current
 - [ ] Only if the owner approves: phone / WhatsApp / delivery information
-- [ ] Point a domain at the host and add `og:image` once a hosted image URL exists
+- [ ] Move the logo from `i.ibb.co` to `assets/logo.png` and update the four references
+- [ ] Swap the logo for a proper 1200 × 630 share image in `og:image` / `twitter:image`
+      (the logo stands in for those today)
