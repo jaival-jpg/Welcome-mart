@@ -18,12 +18,12 @@ Siddhpur, Gujarat.
 | Trust / quick-info strip | — | Google rating · review count · hours · location |
 | About | `#about` | Store intro, four value points, "Visit Welcome Mart" CTA |
 | Product categories | `#categories` | 8 cards (Grocery & Food → Daily Essentials); clicking one filters the products |
-| Featured products | `#products` | 12 tiles with a working category filter, "Available in Store" label, **no prices** |
+| Featured products | `#products` | 12 tiles with a working category filter, a photo slot each, "Available in Store" label, **no prices** |
 | Why shop here | — | 4 feature cards on deep royal blue |
 | Google reviews | `#reviews` | 4.1 / 5 · 20 reviews · stars rendered to 4.1 — **no invented quotes** |
-| Location | `#location` | Full address, copy-address button, styled map, Get Directions (the store's own Maps link) |
+| Location | `#location` | Full address, copy-address button, **live Google map** in an iframe, Get Directions (the store's own Maps link), plus a wide neighbourhood map under the hours row |
 | Store hours | `#hours` | Mon–Sun 9:00 AM – 8:00 PM, today highlighted, live **Open now / Closed** pill (Asia/Kolkata) |
-| Gallery | `#gallery` | 6 frames with a keyboard-accessible lightbox |
+| Gallery | `#gallery` | 6 frames with a keyboard-accessible lightbox — each frame is a real `<img>` |
 | Before you visit | `#faq` | 5 native `<details>` accordions (also published as FAQ structured data) |
 | Final CTA | `#contact` | Get Directions · Explore Categories |
 | Footer | — | Brand, quick links, store information, opening hours |
@@ -78,9 +78,9 @@ address-based *Search on Google Maps* link next to the map stays as it is.
 
 ### The hero photograph
 
-The store's own picture is the front face of the 3-D hero card — one `<img>` added inside
-`.hero__card`, above the generated artwork and the sheen, so nothing is painted over it
-except the small corner chip:
+The store's own picture is the front face of the 3-D hero card — one `<img>` inside
+`.hero__card`, above the photo slot and the sheen, so nothing is painted over it except the
+small corner chip:
 
 ```html
 <img class="hero__photo" src="https://i.ibb.co/Qjj85ZsZ/Screenshot-20260820-222726.jpg" alt="Welcome Mart" />
@@ -93,8 +93,8 @@ To change the shot, edit that one `src` (or set `images.hero` in the config and 
   a phone screenshot, for example — is shown whole, with the card's own gradient as the
   letterbox plate, because JS measures it and adds `.is-portrait`
 - `alt` currently names the store; rewrite it to describe what the photo actually shows
-- if the file ever fails to load (or stalls past 3 s), `.is-missing` hides it and the inline
-  basket artwork underneath shows again — the hero is never left half-empty
+- if the file ever fails to load (or stalls past 3 s), `.is-missing` hides it and the photo
+  slot underneath shows instead — the hero is never left half-empty
 - hover is the only extra motion: the card straightens and rises, the coloured slabs spread,
   the chips lift, the pan shifts a few percent, and the idle float pauses. Everything is
   disabled under `prefers-reduced-motion`, and the image itself has no overlay effects.
@@ -114,44 +114,99 @@ logo is height-locked with `object-fit: contain`, so any aspect ratio lands on t
 baseline without distortion, and it never breaks the layout: if the image fails to load — or
 the request stalls for more than 2.5 s — the generated basket tile is put back automatically.
 
+The mark itself is a rounded white plate with a soft drop shadow (`.brand__logo`), so a
+transparent PNG or a square lockup never reads as a bare rectangle against the header. Change
+`border-radius` for a circle (`50%`) or a harder edge, and `box-shadow` for more or less lift;
+`.brand:hover .brand__logo` holds the hover state.
+
 For production, self-hosting is the better move (one less third-party dependency):
 
 ```text
 assets/logo.png     ← save the file here, then replace the URL in those four places
 ```
 
-If the logo ever needs to sit on the dark footer differently, `.footer__logo .brand__logo`
-already gives it a white plate; adjust `padding`/`border-radius` there. Two other knobs are
+On the dark footer, `.footer__logo .brand__logo` keeps the same rounded plate and swaps the
+soft shadow for a deeper one plus a hairline ring; adjust `padding` there. Two other knobs are
 worth knowing: the desktop width of the mark is capped (`max-inline-size`) so a long
 horizontal lockup can never push the menu out, and if your logo already contains the words
 "Welcome Mart", hide the text beside it with `.brand__text { display: none; }`.
 
-### Add real store photographs
+### Replace the demo images
+
+Every image on the page is a real `<img>` — there is no illustration layer left to unwind.
+Until the shop supplies photographs, each slot paints a **demo plate**: a small inline SVG
+(labelled *DEMO PHOTO — REPLACE WITH YOURS*, in the brand colours) carried inside the `src`
+itself, so it needs no network request, can never 404, and can't be mistaken for a picture of
+the store.
+
+Two ways to swap in real photographs — pick whichever is easier for you:
+
+**1. Edit the `<img>` in the markup.** The hero and about frames carry their plate directly,
+tagged so they are easy to find — search for `data-img="hero"` and `data-img="about"`:
+
+```html
+<img class="hero__art" data-img="hero" alt="Welcome Mart store front" src="images/store-front.jpg" />
+```
+
+**2. Use the config block.** Categories, products and gallery are generated from the data
+lists, so their slots are filled from `images.*` instead (keys are the category/gallery `id`,
+or the product `name`):
 
 ```js
 var images = {
-  hero:  'images/store-front.jpg',   // replaces the hero artwork
-  about: 'images/inside.jpg',        // replaces the about artwork
-  store: 'images/counter.jpg',       // fills the location panel
+  hero:  'images/store-front.jpg',   // 3-D hero card
+  about: 'images/inside.jpg',        // about frame
   categories: { 'grocery-food': 'images/grocery.jpg' },
   products:   { 'Rice': 'images/rice.jpg' },
   gallery:    { front: 'images/front.jpg' }
 };
 ```
 
-Set a value and the generated SVG artwork for that slot is replaced by an `<img>`
-automatically (with `alt`, `loading="lazy"` and `decoding="async"` already handled).
+A configured value always wins over the plate — `applyImages()` re-points the `src` (and the
+`alt` from `images.alt`) for the markup slots, and the renderers pick the config up for the
+generated ones. Behaviour worth knowing:
 
-### Turn the styled map into a live Google map
+- `alt` is written for you as `Demo image — …(replace with a real photograph)` while a slot is
+  a plate, and becomes a plain description once a photo is set — honest text either way
+- **a wrong path can't leave a broken-image icon**: the `error` handler paints that slot's demo
+  plate back over the failed URL (so a typo costs nothing but the picture)
+- plates are vector, so they stay sharp at any size; every frame already sets its own
+  `aspect-ratio` in CSS, so nothing shifts while images decode
+- shoot landscape where you can — frames are 3D-hero 5/4, about 4/3, category 16/9, product
+  4/3, gallery 4/3 (wide tiles 16/9) — and 1200 px on the long side is plenty
+- images below the fold are `loading="lazy"` and `decoding="async"` automatically
 
-In Google Maps → **Share → Embed a map → Copy HTML**, then paste only the `src` URL:
+Nothing else in the page needs touching when you add photographs; delete no markup.
 
-```js
-var maps = { embedUrl: 'https://www.google.com/maps/embed?pb=…' };
-```
+### The live Google maps
 
-Every *Get Directions* control already works (it uses the store's own Maps link above); no
-coordinates or API key is needed for the map or the directions.
+Two real Google map frames ship in the location section — no API key, no coordinates:
+
+| Where | What it shows | Config knob |
+| --- | --- | --- |
+| In the "Visit Welcome Mart" panel, beside the address and hours | the storefront pin area, `z=17` | `maps.embedUrl` |
+| Full width, below the address / hours / panel row | the same address, wider neighbourhood view, `z=15` | `maps.areaEmbedUrl` |
+
+Both `src` URLs are written straight into the markup, built from the verified street address
+(`https://www.google.com/maps?q=Welcome%20Mart%2C%20F%209%2C%20Zavari%20Complex…&output=embed`),
+so the map is already live in the HTML — it works with JavaScript disabled, and the browser
+starts it lazily as the section scrolls near.
+
+To use Google's own embed instead (the one with the exact business pin): in Google Maps →
+search the store → **Share → Embed a map → Copy HTML**, then paste only the `src` URL into
+`maps.embedUrl` (and `maps.areaEmbedUrl` if you want the wide frame to match). `applyMap()`
+re-points both frames from those two values and leaves a frame alone when the URL already
+matches, so nothing loads twice.
+
+Under the panel map sits a small caption row: *Live Google map — positioned from the verified
+address*, an **Open this area in Google Maps** link and the **Get Directions** button. It lives
+below the frame rather than on top of it, so nothing swallows the map's own drag and zoom
+gestures. On paper the frames are hidden (`@media print`) and the address card carries the
+facts.
+
+If Google is ever unreachable for a visitor, the frame simply stays an empty card — the caption
+row below it carries the address, the area-search link and Get Directions, so the map is an
+enhancement and never the only way to find the store.
 
 ### Show a "View Google Reviews" button
 
@@ -167,10 +222,11 @@ Colours, radii, shadows, spacing and type scale are CSS custom properties in one
 block at the top of the file — `--wm-blue-*` (the primary ramp), `--wm-red-*` (the accent
 ramp), `--wm-ink-*` (text), plus lines, surfaces and shadows. The components read the
 semantic aliases (`--color-primary`, `--color-accent`, `--color-text`, …), so re-pointing
-those ~10 alias lines re-skins every section, card, button and inline illustration at once.
-The flat artwork in the hero, categories, products and gallery is drawn from four shared
-JS colour constants (`BLUE`, `BLUE_PALE`, `RED`, `LINE` in the art layer) — change those and
-the illustrations follow the same brand.
+those ~10 alias lines re-skins every section, card, button and icon at once.
+The demo plates are the only exception: they are drawn inside `demoPlate()` in the script, so
+re-colour three hard-coded values there (`#f6f8fe`/`#dbe6fb` background, `#1b2a7a` ink,
+`#e4002b` tick) if you want the placeholders to follow a new palette. Real photographs make
+the question moot.
 
 ---
 
@@ -186,19 +242,25 @@ the illustrations follow the same brand.
 - **Motion:** the hero's 3D card keeps its designed angle in CSS; JavaScript only adds the
   pointer parallax on fine pointers, and `prefers-reduced-motion` removes the float, the
   ribbons' drift, the reveals and the tilt.
-- **Performance:** no image requests at all (artwork is inline SVG), no JS bundles, one
-  IntersectionObserver for scroll reveals, `requestAnimationFrame`-throttled scroll handler.
-- **Graceful degradation:** content renders without JavaScript; the drawer, filters, lightbox
-  and live status are progressive enhancements (`<noscript>` fallbacks list categories and
-  products as plain links).
+- **Performance:** the shipped page makes no image requests (demo plates are inline data
+  URIs); each real photograph you add costs exactly one request. Both map iframes are
+  `loading="lazy"`, so they only download when the location section approaches. No JS bundles,
+  one IntersectionObserver for scroll reveals, `requestAnimationFrame`-throttled scroll handler.
+- **Graceful degradation:** content renders without JavaScript — including the demo photographs
+  and both live map frames; the drawer, filters, lightbox and live status are progressive
+  enhancements (`<noscript>` fallbacks list categories and products as plain links).
 
 ## Checklist before going live
 
 - [ ] Click `https://maps.app.goo.gl/rPTW35E5SdzxgM726` once to confirm it lands on the right
       Welcome Mart pin (it is used by all seven Directions buttons and `hasMap` in the schema)
-- [ ] Photographs: storefront, aisle, counter, and the products you actually stock
+- [ ] Photographs: storefront, aisle, counter, and the products you actually stock — every demo
+      plate is a labelled `<img>`, so replace the `src` (or fill `images.*`) and the page is real
+- [ ] Load the location section on a phone: both map frames should show Welcome Mart's address,
+      pan and zoom, and never sit behind a cookie/consent wall
 - [ ] Google Business Profile URL (enables the "View Google Reviews" button)
-- [ ] Optional Google Maps embed URL (replaces the styled map)
+- [ ] Optional: paste Google's own embed `src` into `maps.embedUrl` / `maps.areaEmbedUrl`
+      (replaces the address-built map frames)
 - [ ] Confirm the hours and the review count are still current
 - [ ] Only if the owner approves: phone / WhatsApp / delivery information
 - [ ] Move the logo from `i.ibb.co` to `assets/logo.png` and update the four references
