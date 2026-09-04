@@ -21,7 +21,7 @@ Siddhpur, Gujarat.
 | Featured products | `#products` | 12 tiles with a working category filter, "Available in Store" label, **no prices** |
 | Why shop here | — | 4 feature cards on deep royal blue |
 | Google reviews | `#reviews` | 4.1 / 5 · 20 reviews · stars rendered to 4.1 — **no invented quotes** |
-| Location | `#location` | Full address, copy-address button, styled map, Get Directions |
+| Location | `#location` | Full address, copy-address button, styled map, Get Directions (the store's own Maps link) |
 | Store hours | `#hours` | Mon–Sun 9:00 AM – 8:00 PM, today highlighted, live **Open now / Closed** pill (Asia/Kolkata) |
 | Gallery | `#gallery` | 6 frames with a keyboard-accessible lightbox |
 | Before you visit | `#faq` | 5 native `<details>` accordions (also published as FAQ structured data) |
@@ -59,6 +59,22 @@ var business = {
   phone: null, whatsapp: null, email: null, googleBusinessUrl: null, gstin: null
 };
 ```
+
+### The Directions link
+
+Every **Get Directions** control — header, hero, about, location panel, hours card, final CTA
+and the mobile action bar — opens the store's own Google Maps link (7 links, one source of
+truth):
+
+```js
+var directionsShortLink = 'https://maps.app.goo.gl/rPTW35E5SdzxgM726';   // supplied by Welcome Mart
+```
+
+The same URL is written into the static `href`s as well, so the buttons are already correct
+before any JavaScript runs. If you ever clear that value, the site automatically falls back to
+a directions link built from the verified address
+(`https://www.google.com/maps/dir/?api=1&destination=…`) — no other edit needed, and the
+address-based *Search on Google Maps* link next to the map stays as it is.
 
 ### The hero photograph
 
@@ -134,7 +150,8 @@ In Google Maps → **Share → Embed a map → Copy HTML**, then paste only the 
 var maps = { embedUrl: 'https://www.google.com/maps/embed?pb=…' };
 ```
 
-The address-based *Get Directions* link already works today; no coordinates or API key needed.
+Every *Get Directions* control already works (it uses the store's own Maps link above); no
+coordinates or API key is needed for the map or the directions.
 
 ### Show a "View Google Reviews" button
 
@@ -177,6 +194,8 @@ the illustrations follow the same brand.
 
 ## Checklist before going live
 
+- [ ] Click `https://maps.app.goo.gl/rPTW35E5SdzxgM726` once to confirm it lands on the right
+      Welcome Mart pin (it is used by all seven Directions buttons and `hasMap` in the schema)
 - [ ] Photographs: storefront, aisle, counter, and the products you actually stock
 - [ ] Google Business Profile URL (enables the "View Google Reviews" button)
 - [ ] Optional Google Maps embed URL (replaces the styled map)

@@ -46,7 +46,9 @@
        business.*     verified profile: address, rating, hours, and the
                       not-supplied fields (phone, email, social, price
                       range, GST, owner) which stay null on purpose
-       maps.*         directions URL · optional embed URL for a live map
+       maps.*         the store's Google Maps link (every Get Directions
+                      button; falls back to the verified address) · optional
+                      embed URL for a live map
        logo / favicon deliberately NOT in WM_DATA — they are plain markup
                       ("BRAND LOGO + FAVICON" in <head>) so they appear even
                       with JavaScript disabled and cost no extra script
@@ -132,6 +134,7 @@
   "@id": "#welcome-mart",
   "name": "Welcome Mart",
   "description": "Welcome Mart is a local grocery store in Siddhpur, Gujarat, offering everyday grocery and household essentials.",
+  "hasMap": "https://maps.app.goo.gl/rPTW35E5SdzxgM726",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "F 9, Zavari Complex, 12, Road, Gurukripa Society",
@@ -3101,7 +3104,7 @@ noscript .noscript-note {
     </nav>
 
     <div class="header-cta">
-      <a class="btn btn--primary btn--sm" href="https://www.google.com/maps/dir/?api=1&amp;destination=F%209%2C%20Zavari%20Complex%2C%2012%2C%20Road%2C%20Gurukripa%20Society%2C%20Siddhpur%2C%20Gujarat%20384151%2C%20India" target="_blank" rel="noopener noreferrer nofollow" data-directions>
+      <a class="btn btn--primary btn--sm" href="https://maps.app.goo.gl/rPTW35E5SdzxgM726" target="_blank" rel="noopener noreferrer nofollow" data-directions>
         <svg class="icon icon--sm" aria-hidden="true"><use href="#i-navigation" /></svg>
         <span>Get Directions</span>
       </a>
@@ -3133,7 +3136,7 @@ noscript .noscript-note {
         <p class="mobile-menu__fact"><svg class="icon" aria-hidden="true"><use href="#i-star" /></svg> <span><strong>4.1 / 5</strong> from 20 Google reviews</span></p>
       </div>
       <div class="mobile-menu__actions">
-        <a class="btn btn--primary btn--block" href="https://www.google.com/maps/dir/?api=1&amp;destination=F%209%2C%20Zavari%20Complex%2C%2012%2C%20Road%2C%20Gurukripa%20Society%2C%20Siddhpur%2C%20Gujarat%20384151%2C%20India" target="_blank" rel="noopener noreferrer nofollow" data-directions>
+        <a class="btn btn--primary btn--block" href="https://maps.app.goo.gl/rPTW35E5SdzxgM726" target="_blank" rel="noopener noreferrer nofollow" data-directions>
           <svg class="icon icon--sm" aria-hidden="true"><use href="#i-navigation" /></svg>
           <span>Get Directions</span>
         </a>
@@ -3220,7 +3223,7 @@ noscript .noscript-note {
             <span>Explore Products</span>
             <svg class="icon icon--sm icon--arrow" aria-hidden="true"><use href="#i-arrow-right" /></svg>
           </a>
-          <a class="btn btn--outline btn--lg" href="https://www.google.com/maps/dir/?api=1&amp;destination=F%209%2C%20Zavari%20Complex%2C%2012%2C%20Road%2C%20Gurukripa%20Society%2C%20Siddhpur%2C%20Gujarat%20384151%2C%20India" target="_blank" rel="noopener noreferrer nofollow" data-directions>
+          <a class="btn btn--outline btn--lg" href="https://maps.app.goo.gl/rPTW35E5SdzxgM726" target="_blank" rel="noopener noreferrer nofollow" data-directions>
             <svg class="icon icon--sm" aria-hidden="true"><use href="#i-navigation" /></svg>
             <span>Get Directions</span>
           </a>
@@ -3831,7 +3834,7 @@ noscript .noscript-note {
               </p>
             </div>
             <div class="addr-card__actions">
-              <a class="btn btn--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=F%209%2C%20Zavari%20Complex%2C%2012%2C%20Road%2C%20Gurukripa%20Society%2C%20Siddhpur%2C%20Gujarat%20384151%2C%20India" target="_blank" rel="noopener noreferrer nofollow" data-directions>
+              <a class="btn btn--primary" href="https://maps.app.goo.gl/rPTW35E5SdzxgM726" target="_blank" rel="noopener noreferrer nofollow" data-directions>
                 <svg class="icon icon--sm" aria-hidden="true"><use href="#i-navigation" /></svg>
                 <span>Get Directions</span>
               </a>
@@ -3943,7 +3946,7 @@ noscript .noscript-note {
                 <span>Open the area in Google Maps</span>
                 <svg class="icon" aria-hidden="true" style="block-size:0.8rem"><use href="#i-external" /></svg>
               </a>
-              <a class="btn btn--primary btn--sm" href="https://www.google.com/maps/dir/?api=1&amp;destination=F%209%2C%20Zavari%20Complex%2C%2012%2C%20Road%2C%20Gurukripa%20Society%2C%20Siddhpur%2C%20Gujarat%20384151%2C%20India" target="_blank" rel="noopener noreferrer nofollow" data-directions>
+              <a class="btn btn--primary btn--sm" href="https://maps.app.goo.gl/rPTW35E5SdzxgM726" target="_blank" rel="noopener noreferrer nofollow" data-directions>
                 <svg class="icon icon--sm" aria-hidden="true"><use href="#i-navigation" /></svg>
                 <span>Get Directions</span>
               </a>
@@ -4053,7 +4056,7 @@ noscript .noscript-note {
               Visit Welcome Mart in Siddhpur and make your everyday shopping simple.
             </p>
             <div class="cta__actions">
-              <a class="btn btn--accent btn--lg" href="https://www.google.com/maps/dir/?api=1&amp;destination=F%209%2C%20Zavari%20Complex%2C%2012%2C%20Road%2C%20Gurukripa%20Society%2C%20Siddhpur%2C%20Gujarat%20384151%2C%20India" target="_blank" rel="noopener noreferrer nofollow" data-directions>
+              <a class="btn btn--accent btn--lg" href="https://maps.app.goo.gl/rPTW35E5SdzxgM726" target="_blank" rel="noopener noreferrer nofollow" data-directions>
                 <svg class="icon icon--sm" aria-hidden="true"><use href="#i-navigation" /></svg>
                 <span>Get Directions</span>
               </a>
@@ -4172,7 +4175,7 @@ noscript .noscript-note {
      MOBILE BOTTOM ACTION BAR
      ===================================================================== -->
 <div class="mobile-bar" id="mobile-bar" role="navigation" aria-label="Quick actions">
-  <a class="mobile-bar__btn mobile-bar__btn--primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=F%209%2C%20Zavari%20Complex%2C%2012%2C%20Road%2C%20Gurukripa%20Society%2C%20Siddhpur%2C%20Gujarat%20384151%2C%20India" target="_blank" rel="noopener noreferrer nofollow" data-directions>
+  <a class="mobile-bar__btn mobile-bar__btn--primary" href="https://maps.app.goo.gl/rPTW35E5SdzxgM726" target="_blank" rel="noopener noreferrer nofollow" data-directions>
     <svg class="icon" aria-hidden="true"><use href="#i-map-pin" /></svg>
     <span>Directions</span>
   </a>
@@ -4259,15 +4262,22 @@ noscript .noscript-note {
 
   /* =====================================================================
      2. MAPS
-        Only an address-query directions link is used, because no latitude
-        or longitude was supplied. Add the embed URL to light up the map.
+        The store supplied its own Google Maps link, so that is what every
+        "Get Directions" control opens — it is also written straight into the
+        markup, so the buttons are correct before JavaScript runs.
+        The address-query link below stays as the automatic fallback: clear
+        directionsShortLink and wireLinks() re-points all seven controls at
+        directions built from the verified address, with no other edit needed.
+        Add the embed URL to light up the live map.
      ===================================================================== */
-  var directionsUrl =
+  var directionsShortLink = 'https://maps.app.goo.gl/rPTW35E5SdzxgM726';
+
+  var directionsByAddress =
     'https://www.google.com/maps/dir/?api=1&destination=' +
     encodeURIComponent(business.address.full);
 
   var maps = {
-    directionsUrl: directionsUrl,
+    directionsUrl: directionsShortLink || directionsByAddress,
     embedUrl: '',            /* e.g. paste a Google Maps "Embed a map" iframe src */
     placeSearchUrl: 'https://www.google.com/maps/search/?api=1&query=' +
       encodeURIComponent(business.name + ' ' + business.address.full)
