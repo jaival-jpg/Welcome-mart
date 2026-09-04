@@ -931,7 +931,12 @@ html.is-menu-open body { overflow: hidden; }
 @media (max-width: 23.4375em) {
   .brand__tag { display: none; }
   .brand__name { font-size: 0.94rem; letter-spacing: 0.05em; }
-  .brand { gap: var(--gap-2); }
+  .brand { gap: var(--gap-2); min-inline-size: 0; }
+  /* 320px: the plate shrinks with the row and the wordmark ellipsises, so a
+     wide client lockup can never push the hamburger out of view */
+  .brand__logo { block-size: 2.6rem; max-inline-size: 6.4rem; padding: 0.2rem; }
+  .brand__text { min-inline-size: 0; }
+  .brand__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
 
 /* Desktop nav ------------------------------------------------------------- */
@@ -2801,6 +2806,7 @@ details.faq__item > .faq__panel { display: block; }
     scroll-behavior: auto !important;
   }
   .js [data-reveal] { opacity: 1; transform: none; }
+  .brand:hover .brand__logo { transform: none; }
   .js .hero [data-hero] { animation: none; }
   .hero-chip { animation: none; }
   .status-dot::after { animation: none; }
