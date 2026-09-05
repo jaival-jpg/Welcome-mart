@@ -17,7 +17,7 @@ Siddhpur, Gujarat.
 | Hero | `#top` | Ribbon backdrop, headline with a folded red tag, two CTAs, Google rating proof, and a **3D showpiece card** that tilts toward the pointer |
 | Trust / quick-info strip | — | Google rating · review count · hours · location |
 | About | `#about` | Store intro, four value points, "Visit Welcome Mart" CTA |
-| Product categories | `#categories` | 8 cards (Grocery & Food → Daily Essentials); clicking one filters the products |
+| Product categories | `#categories` | 8 cards (Grocery & Food → Daily Essentials), each with its own `image` slot; clicking one filters the products |
 | Featured products | `#products` | 12 tiles with a working category filter, a photo slot each, "Available in Store" label, **no prices** |
 | Why shop here | — | 4 feature cards on deep royal blue |
 | Google reviews | `#reviews` | 4.1 / 5 · 20 reviews · stars rendered to 4.1 — **no invented quotes** |
@@ -139,18 +139,42 @@ Until the shop supplies photographs, each slot paints a **demo plate**: a small 
 itself, so it needs no network request, can never 404, and can't be mistaken for a picture of
 the store.
 
-Two ways to swap in real photographs — pick whichever is easier for you:
+Three ways to put a photograph in — start with the first, it is the one that covers the
+"Browse the store" and "Popular picks" grids:
 
-**1. Edit the `<img>` in the markup.** The hero and about frames carry their plate directly,
-tagged so they are easy to find — search for `data-img="hero"` and `data-img="about"`:
+**1. Set `image` on the item itself.** Every category card, product card and gallery frame has
+its own `image` line right beside its name in the config lists (`categories` = section 5,
+`products` = section 6, `gallery` = section 7), and that value *is* the card's `<img src>`:
+
+```js
+var products = [
+  { name: 'Rice', image: 'images/rice.jpg', category: 'grocery-food', icon: 'i-wheat', note: 'Pantry staple' },
+  { name: 'Wheat Flour', image: '', category: 'grocery-food', icon: 'i-wheat', note: 'Pantry staple' },
+  //                        ↑ left empty, this card keeps its demo plate
+];
+```
+
+Nothing else needs touching: the card renders exactly one image tag, and the comments next to
+`#cat-grid` and `#prod-grid` in the markup show it, so you can see what a path turns into:
+
+```html
+<img src="images/rice.jpg" alt="Rice available in store at Welcome Mart" loading="lazy" decoding="async" />
+```
+
+Categories use the same field (`image` on the category entry fills that card's photo strip in
+the 16:9 frame), and so do the six gallery frames — the gallery image also feeds the lightbox,
+so one path covers both views.
+
+**2. Edit the `<img>` in the markup** for the two static frames. The hero and about frames carry
+their plate directly, tagged so they are easy to find — search for `data-img="hero"` and
+`data-img="about"`:
 
 ```html
 <img class="hero__art" data-img="hero" alt="Welcome Mart store front" src="images/store-front.jpg" />
 ```
 
-**2. Use the config block.** Categories, products and gallery are generated from the data
-lists, so their slots are filled from `images.*` instead (keys are the category/gallery `id`,
-or the product `name`):
+**3. Fill the `images.*` maps** when you would rather do a whole section in one place — keys
+are the category/gallery `id`, or the product `name`:
 
 ```js
 var images = {
@@ -162,9 +186,10 @@ var images = {
 };
 ```
 
-A configured value always wins over the plate — `applyImages()` re-points the `src` (and the
-`alt` from `images.alt`) for the markup slots, and the renderers pick the config up for the
-generated ones. Behaviour worth knowing:
+**Precedence: the item's own `image` → the matching key in `images.categories` /
+`images.products` / `images.gallery` → demo plate.** For the two markup frames, `applyImages()`
+re-points the `src` (and the `alt` from `images.alt`) once a value exists. Behaviour worth
+knowing:
 
 - `alt` is written for you as `Demo image — …(replace with a real photograph)` while a slot is
   a plate, and becomes a plain description once a photo is set — honest text either way
@@ -174,6 +199,9 @@ generated ones. Behaviour worth knowing:
   `aspect-ratio` in CSS, so nothing shifts while images decode
 - shoot landscape where you can — frames are 3D-hero 5/4, about 4/3, category 16/9, product
   4/3, gallery 4/3 (wide tiles 16/9) — and 1200 px on the long side is plenty
+- name the files after the item as you export them (`rice.jpg`, `grocery.jpg`); the path is the
+  only thing you paste, and product photos are reused nowhere else, so one file per product is
+  enough
 - images below the fold are `loading="lazy"` and `decoding="async"` automatically
 
 Nothing else in the page needs touching when you add photographs; delete no markup.

@@ -3439,7 +3439,10 @@ noscript .noscript-note {
         </p>
       </div>
 
-      <!-- Rendered from WM_DATA.categories -->
+      <!-- Rendered from WM_DATA.categories. Every card paints one image tag:
+             <img src="images/grocery.jpg" alt="Grocery & Food section at Welcome Mart" />
+           The src comes from the `image` field on that category's entry in the
+           categories list (config section 5) — set it and the tag is filled. -->
       <ul class="cat-grid" id="cat-grid"></ul>
 
       <noscript>
@@ -3493,6 +3496,10 @@ noscript .noscript-note {
           <p class="prod-status" id="prod-status" role="status" aria-live="polite"></p>
         </div>
 
+        <!-- Twelve cards in "Popular picks", one image tag each:
+             <img src="images/rice.jpg" alt="Rice available in store at Welcome Mart" />
+             Each src comes from the `image` field on that product's entry in the
+             products list (config section 6) — add a path there, done. -->
         <ul class="prod-grid" id="prod-grid"></ul>
 
         <noscript>
@@ -3815,10 +3822,15 @@ noscript .noscript-note {
           <p class="section-head__lede">
             How the store is laid out — front counter, grocery aisle, daily staples and the
             drinks chiller. Labelled demo plates stand in until the shop's own
-            photographs are added — see images.gallery in the config below.
+            photographs are added — one `image` line per frame in the gallery list
+            below (config section 7).
           </p>
         </div>
       </div>
+      <!-- Rendered from WM_DATA.gallery. One frame = one image tag, and the
+           lightbox shows the same file:
+             <img src="images/front.jpg" alt="Store front at Welcome Mart" />
+           Set `image` on that gallery entry (config section 7). -->
       <ul class="gallery__grid" id="gallery-grid"></ul>
     </div>
   </section>
@@ -4138,10 +4150,18 @@ noscript .noscript-note {
 
   /* =====================================================================
      3. IMAGES  (drop in real store photographs)
-        Every slot on the page is already a real <img>. Empty value  -> the
-        labelled demo plate stays; a path/URL -> your photograph, no other
-        edit needed. Categories / products / gallery are keyed by id (or the
-        product name), and images.alt overrides the alt text for hero / about.
+        Every image on the page is a real <img> already, so a photo is always a
+        one-line edit: paste a path/URL and the plate for that slot disappears.
+
+          hero / about        -> the two fields in this object
+          category cards      -> `image` on each entry of categories  (section 5)
+          product cards       -> `image` on each entry of products    (section 6)
+          gallery + lightbox  -> `image` on each entry of gallery     (section 7)
+
+        The keyed maps below are the batch route: filling images.categories /
+        products / gallery here overrides the whole section from one place
+        (handy if you would rather name files by id). A value set on the item
+        itself always wins. images.alt overrides the alt text for hero / about.
      ===================================================================== */
   var images = {
     /* The brand logo + favicon are not here on purpose: they are plain markup
@@ -4154,7 +4174,8 @@ noscript .noscript-note {
       hero: 'Welcome Mart store front',
       about: 'Inside Welcome Mart'
     },
-    /* Keyed by category / product / gallery id from the lists below */
+    /* Batch alternative: keyed by category id / product name / gallery id.
+       The `image` field on each item takes precedence over these. */
     categories: {},
     products: {},
     gallery: {}
@@ -4174,11 +4195,14 @@ noscript .noscript-note {
 
   /* =====================================================================
      5. PRODUCT CATEGORIES  (website categories, not stock claims)
+        `image` is the photo shown on that category's card in the "Browse the
+        store" section — one path per card, nothing else to touch.
      ===================================================================== */
   var categories = [
     {
       id: 'grocery-food',
       name: 'Grocery & Food',
+      image: '',
       desc: 'Everyday food and pantry essentials.',
       icon: 'i-basket',
       tone: 'brand'
@@ -4186,6 +4210,7 @@ noscript .noscript-note {
     {
       id: 'snacks-biscuits',
       name: 'Snacks & Biscuits',
+      image: '',
       desc: 'Biscuits, namkeen and quick tea-time treats.',
       icon: 'i-cookie',
       tone: 'accent'
@@ -4193,6 +4218,7 @@ noscript .noscript-note {
     {
       id: 'dairy-beverages',
       name: 'Dairy & Beverages',
+      image: '',
       desc: 'Milk, curd, tea and everyday drinks.',
       icon: 'i-milk',
       tone: 'brand'
@@ -4200,6 +4226,7 @@ noscript .noscript-note {
     {
       id: 'spices-essentials',
       name: 'Spices & Essentials',
+      image: '',
       desc: 'Whole and ground masala for daily cooking.',
       icon: 'i-jar',
       tone: 'accent'
@@ -4207,6 +4234,7 @@ noscript .noscript-note {
     {
       id: 'personal-care',
       name: 'Personal Care',
+      image: '',
       desc: 'Bath, hair and daily hygiene essentials.',
       icon: 'i-droplet',
       tone: 'brand'
@@ -4214,6 +4242,7 @@ noscript .noscript-note {
     {
       id: 'home-cleaning',
       name: 'Home & Cleaning',
+      image: '',
       desc: 'Cleaners and supplies that keep the house running.',
       icon: 'i-sparkles',
       tone: 'accent'
@@ -4221,6 +4250,7 @@ noscript .noscript-note {
     {
       id: 'drinks',
       name: 'Drinks',
+      image: '',
       desc: 'Soft drinks and bottled beverages.',
       icon: 'i-cup',
       tone: 'brand'
@@ -4228,6 +4258,7 @@ noscript .noscript-note {
     {
       id: 'daily-essentials',
       name: 'Daily Essentials',
+      image: '',
       desc: 'The items most households restock every week.',
       icon: 'i-package',
       tone: 'accent'
@@ -4236,32 +4267,35 @@ noscript .noscript-note {
 
   /* =====================================================================
      6. FEATURED PRODUCTS  (generic placeholders — no prices, no brands)
+        Each entry feeds one card in the "Popular picks" grid, and its `image`
+        value is that card's <img src>. Empty  -> labelled demo plate;
+        'images/rice.jpg' -> that photograph. No other edit is needed.
      ===================================================================== */
   var products = [
-    { name: 'Rice', category: 'grocery-food', icon: 'i-wheat', note: 'Pantry staple' },
-    { name: 'Wheat Flour', category: 'grocery-food', icon: 'i-wheat', note: 'Pantry staple' },
-    { name: 'Cooking Oil', category: 'grocery-food', icon: 'i-droplet', note: 'Kitchen essential' },
-    { name: 'Biscuits', category: 'snacks-biscuits', icon: 'i-cookie', note: 'Tea-time pack' },
-    { name: 'Packaged Snacks', category: 'snacks-biscuits', icon: 'i-cookie', note: 'Family pack' },
-    { name: 'Tea', category: 'dairy-beverages', icon: 'i-tea', note: 'Morning cup' },
-    { name: 'Milk & Curd', category: 'dairy-beverages', icon: 'i-milk', note: 'Daily dairy' },
-    { name: 'Soft Drinks', category: 'drinks', icon: 'i-cup', note: 'Chilled counter' },
-    { name: 'Spices & Masala', category: 'spices-essentials', icon: 'i-jar', note: 'Kitchen flavours' },
-    { name: 'Household Cleaners', category: 'home-cleaning', icon: 'i-spray', note: 'Home upkeep' },
-    { name: 'Personal Care Basics', category: 'personal-care', icon: 'i-droplet', note: 'Daily routine' },
-    { name: 'Weekly Essentials Box', category: 'daily-essentials', icon: 'i-package', note: 'One-trip shop' }
+    { name: 'Rice', image: '', category: 'grocery-food', icon: 'i-wheat', note: 'Pantry staple' },
+    { name: 'Wheat Flour', image: '', category: 'grocery-food', icon: 'i-wheat', note: 'Pantry staple' },
+    { name: 'Cooking Oil', image: '', category: 'grocery-food', icon: 'i-droplet', note: 'Kitchen essential' },
+    { name: 'Biscuits', image: '', category: 'snacks-biscuits', icon: 'i-cookie', note: 'Tea-time pack' },
+    { name: 'Packaged Snacks', image: '', category: 'snacks-biscuits', icon: 'i-cookie', note: 'Family pack' },
+    { name: 'Tea', image: '', category: 'dairy-beverages', icon: 'i-tea', note: 'Morning cup' },
+    { name: 'Milk & Curd', image: '', category: 'dairy-beverages', icon: 'i-milk', note: 'Daily dairy' },
+    { name: 'Soft Drinks', image: '', category: 'drinks', icon: 'i-cup', note: 'Chilled counter' },
+    { name: 'Spices & Masala', image: '', category: 'spices-essentials', icon: 'i-jar', note: 'Kitchen flavours' },
+    { name: 'Household Cleaners', image: '', category: 'home-cleaning', icon: 'i-spray', note: 'Home upkeep' },
+    { name: 'Personal Care Basics', image: '', category: 'personal-care', icon: 'i-droplet', note: 'Daily routine' },
+    { name: 'Weekly Essentials Box', image: '', category: 'daily-essentials', icon: 'i-package', note: 'One-trip shop' }
   ];
 
   /* =====================================================================
-     7. GALLERY  (six frames — drop real photographs in images.gallery)
+     7. GALLERY  (six frames — set `image` on the frame, or key images.gallery)
      ===================================================================== */
   var gallery = [
-    { id: 'front', title: 'Store front', wide: true },
-    { id: 'aisle', title: 'Grocery aisle' },
-    { id: 'produce', title: 'Daily staples' },
-    { id: 'counter', title: 'Billing counter' },
-    { id: 'drinks', title: 'Drinks fridge' },
-    { id: 'homecare', title: 'Home care shelf', wide: true }
+    { id: 'front', title: 'Store front', image: '', wide: true },
+    { id: 'aisle', title: 'Grocery aisle', image: '' },
+    { id: 'produce', title: 'Daily staples', image: '' },
+    { id: 'counter', title: 'Billing counter', image: '' },
+    { id: 'drinks', title: 'Drinks fridge', image: '' },
+    { id: 'homecare', title: 'Home care shelf', image: '', wide: true }
   ];
 
   /* =====================================================================
@@ -4440,7 +4474,7 @@ noscript .noscript-note {
 
   function CategoryCard(props) {
     var cat = props.category;
-    var photo = photoFor(images.categories[cat.id], cat.name,
+    var photo = photoFor(cat.image || images.categories[cat.id], cat.name,
       cat.name + ' section at Welcome Mart', 640, 360);
 
     /* The card is a region; the title holds the real button so the
@@ -4477,7 +4511,7 @@ noscript .noscript-note {
   function ProductCard(props) {
     var product = props.product;
     var catName = catNameById[product.category] || 'Everyday essentials';
-    var photo = photoFor(images.products[product.name], product.name,
+    var photo = photoFor(product.image || images.products[product.name], product.name,
       product.name + ' available in store at Welcome Mart', 640, 480);
 
     var media = h('div', { class: 'prod-card__media' }, [
@@ -4517,7 +4551,7 @@ noscript .noscript-note {
 
   function GalleryItem(props) {
     var item = props.item;
-    var node = h('img', photoFor(images.gallery[item.id], item.title,
+    var node = h('img', photoFor(item.image || images.gallery[item.id], item.title,
       item.title + ' at Welcome Mart', item.wide ? 960 : 720, item.wide ? 540 : 540));
     return h('li', {
         dataset: { reveal: '' },
@@ -5116,7 +5150,7 @@ noscript .noscript-note {
     var total = gallery.length;
     lightboxIndex = (index + total) % total;
     var item = gallery[lightboxIndex];
-    var src = images.gallery[item.id] || '';
+    var src = item.image || images.gallery[item.id] || '';
     clear(lightboxStage);
     lightboxStage.appendChild(h('img', photoFor(src, item.title,
       item.title + ' at Welcome Mart', 1200, 800)));
